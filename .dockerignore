@@ -1,0 +1,75 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+*.md
+docs/
+
+# Environment files (security - don't copy into image)
+# NOTE: We're allowing .env for now because the app relies on it
+# In production, fix Viper config to use environment variables properly
+# .env
+.env.*
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Kubernetes manifests
+kubernetes/
+*.yaml
+*.yml
+
+# Scripts
+scripts/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Test files and coverage
+*_test.go
+**/*_test.go
+coverage.txt
+coverage.out
+*.test
+
+# Build artifacts (if you build locally)
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+main
+bin/
+dist/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.log
+
+# Dependencies (go.mod and go.sum are needed, but vendor is not if using modules)
+vendor/
+
+# MongoDB files (not needed in image)
+mongodb.key
+*.key
+
+# Node modules (if you have any frontend)
+node_modules/
+npm-debug.log
