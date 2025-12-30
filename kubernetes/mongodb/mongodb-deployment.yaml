@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: muchtodo
+  name: mongodb-deployment
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:8.0
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          envFrom:
+            - secretRef:
+                name: mongodb-secret
+            - configMapRef:
+                name: mongodb-config
+          ports:
+            - containerPort: 27017
+          livenessProbe:
+            exec:
+              command:
+                - mongosh
+                - --eval
+                - "db.adminCommand('ping')"
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - mongosh
+                - --eval
+                - "db.adminCommand('ping')"
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+            - name: mongodb-configdb
+              mountPath: /data/configdb
+            - name: mongodb-data
+              mountPath: /data/db
+      volumes:
+        - name: mongodb-data
+          persistentVolumeClaim:
+            claimName: mongodb-pvc
+        - name: mongodb-configdb
+          emptyDir: {}

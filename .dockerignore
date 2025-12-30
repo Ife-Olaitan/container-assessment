@@ -4,7 +4,7 @@
 .gitattributes
 
 # Documentation
-README.md
+MuchToDo/README.md
 *.md
 docs/
 
@@ -12,11 +12,11 @@ docs/
 # NOTE: We're allowing .env for now because the app relies on it
 # In production, fix Viper config to use environment variables properly
 # .env
-.env.*
+# .env.*
 
 # Docker files
 Dockerfile
-docker-compose.yml
+docker-compose.yaml
 .dockerignore
 
 # Kubernetes manifests

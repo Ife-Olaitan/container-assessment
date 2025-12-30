@@ -1,12 +1,12 @@
 services:
   app:
-    image: ifeolaitan/muchtodo:v1
+    image: ifeolaitan/muchtodo:v2
     container_name: muchtodo-app
     restart: unless-stopped
     ports:
       - "8080:8080"
-    env_file:
-      - .env
+    volumes:
+      - ./.env:/app/.env:ro
     depends_on:
       mongodb:
         condition: service_healthy
@@ -25,18 +25,11 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
       MONGO_INITDB_DATABASE: ${DB_NAME}
-    command:
-      - "--replSet"
-      - "rs0"
-      - "--bind_ip_all"
-      - "--keyFile"
-      - "/data/keyfile/mongodb.key"
     volumes:
       - mongo_data:/data/db
       - mongo_config:/data/configdb
-      - ./MuchToDo/mongodb.key:/data/keyfile/mongodb.key:ro
     healthcheck:
-      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongodb:27017'}]}) }" | mongosh --port 27017 -u ${MONGO_USERNAME} -p ${MONGO_PASSWORD} --authenticationDatabase admin --quiet
+      test: mongosh --port 27017 -u ${MONGO_USERNAME} -p ${MONGO_PASSWORD} --authenticationDatabase admin --eval "db.adminCommand('ping')" --quiet
       interval: 10s
       timeout: 10s
       retries: 5
