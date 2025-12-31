@@ -28,7 +28,6 @@ WORKDIR /app
 # Copy binary from build stage
 COPY --from=builder /build/main .
 COPY --from=builder /build/docs ./docs
-#COPY --from=builder /build/.env .
 
 # Use non-root user
 USER appuser

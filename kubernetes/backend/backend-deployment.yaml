@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ifeolaitan/muchtodo:v2
+          image: ifeolaitan/muchtodo:v1
           imagePullPolicy: Always
           resources:
             requests:

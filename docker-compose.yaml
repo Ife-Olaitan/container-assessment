@@ -1,6 +1,6 @@
 services:
   app:
-    image: ifeolaitan/muchtodo:v2
+    image: ifeolaitan/muchtodo:v1
     container_name: muchtodo-app
     restart: unless-stopped
     ports:
