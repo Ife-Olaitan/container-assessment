@@ -36,4 +36,5 @@ go.work.sum
 docker-compose.test.yaml
 mongodb.key
 mongo-keyfile
+medium-article-generic.md
 

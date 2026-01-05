@@ -6,6 +6,7 @@ metadata:
   labels:
     app: mongodb
 spec:
+  type: ClusterIP
   selector:
     app: mongodb
   ports:
